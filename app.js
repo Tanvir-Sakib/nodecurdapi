@@ -1,7 +1,13 @@
 const express = require('express');
+var path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
 const mysql = require('mysql');
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
    
 /*------------------------------------------
 --------------------------------------------
@@ -31,6 +37,10 @@ conn.connect((err) =>{
   if(err) throw err;
   console.log('Mysql Connected with App...');
 });
+
+app.get('/', (req,res)=>{
+    res.render('index', { title: 'Sakib' });
+}); 
    
 /**
  * Get All Items
